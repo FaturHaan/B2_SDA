@@ -10,6 +10,7 @@ int main() {
     int nomorTransaksi;
     char inputBarang[256];
     int jumlahTransaksi;
+    char namaFile[100];
     int totalSebelum;
     
     InisialisasiTrie(&root);
@@ -54,7 +55,21 @@ int main() {
         }
     }
     else if (pilihan == 2) {
-        
+        printf("\nMasukkan nama file (beserta ekstensinya, contoh: transaksi.txt): ");
+        if (fgets(namaFile, sizeof(namaFile), stdin) != NULL) { 
+            namaFile[strcspn(namaFile, "\n")] = 0;
+            FILE *fp = fopen(namaFile, "r");
+            if (fp == NULL) {
+                printf("Gagal membuka file '%s'. Pastikan file berada di folder yang sama dengan program.\n", namaFile);
+                return 1;
+            }
+            
+            printf("\nMembaca isi file...\n");
+            while (fgets(inputBarang, sizeof(inputBarang), fp) != NULL) {
+                ProsesStringTransaksi(root, inputBarang, &totalTransaksi);
+            }
+            fclose(fp);
+        }
     } 
     else {
         printf("Pilihan tidak tersedia. Program berhenti.\n");
