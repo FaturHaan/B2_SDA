@@ -12,6 +12,8 @@ int main() {
     int jumlahTransaksi;
     char namaFile[100];
     int totalSebelum;
+    int threshold;
+    infotype jalur[20];
     
     InisialisasiTrie(&root);
     
@@ -49,7 +51,7 @@ int main() {
                 
                 if (totalTransaksi == totalSebelum) {
                     printf("Transaksi kosong atau format salah. Silakan ulangi.\n");
-                    nomorTransaksi--;
+                    nomorTransaksi--; 
                 }
             }
         }
@@ -75,6 +77,25 @@ int main() {
         printf("Pilihan tidak tersedia. Program berhenti.\n");
         return 1;
     }
+    
+    if (totalTransaksi == 0) {
+        printf("\nTidak ada satupun transaksi yang berhasil diproses!\n");
+        return 1;
+    }
+    
+    printf("\nTotal %d transaksi sukses diproses ke dalam Trie!\n", totalTransaksi);
+    printf("\nMasukkan nilai Threshold (Minimum Support): ");
+    scanf("%d", &threshold);
+    printf("\n==========================================\n");
+    printf("                Pasangan Barang           \n");
+    printf("==========================================\n");
+    printf("Menampilkan itemset (>= 2 item) dengan support >= %d:\n\n", threshold);
+    
+    CetakItemsetSering(root, jalur, 0, threshold);
+    printf("\n==========================================\n");
+    printf("Selesai.\n");
+    
+    DeAlokasi(&root);
     
     return 0;
 }
