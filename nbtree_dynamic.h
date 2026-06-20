@@ -43,5 +43,30 @@ address Alokasi(infotype X);
 /* Mengembalikan address node baru */
 /* Jika gagal, mengembalikan NULL */
 
+//Traversal
+void PreOrder(Tree T);
+void InOrder(Tree T);
+void PostOrder(Tree T);
+void LevelOrder(Tree T);
+
+//Search
+int Search(Tree T, infotype X);
+
+//Dealokasi
+void DeAlokasi(Tree *T);
+
+void InisialisasiTrie(Tree *root);
+
+address CariAtauBuatChild(address parent, infotype idBarang);
+
+void MasukkanTransaksiKeTrie(address node, infotype *daftarBarang, int jumlahBarang);
+
+void CetakItemsetSering(address node, infotype *jalur, int jumlahItem, int threshold);
+
+void AmbilNamaBarang(infotype idBarang, char* namaBarang);
+
+void UrutkanDaftar(infotype *daftar, int n);
+
+void ProsesStringTransaksi(Tree root, char *teksInput, int *hitungTransaksi);
 
 #endif

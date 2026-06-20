@@ -1,0 +1,21 @@
+# Compiled artifacts
+*.o
+*.obj
+*.exe
+*.out
+*.a
+*.so
+*.dll
+
+# Debug
+*.pdb
+*.idb
+*.ilk
+
+# IDE
+.vs/
+.vscode/launch.json
+
+# OS
+Thumbs.db
+.DS_Store
