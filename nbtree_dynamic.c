@@ -14,10 +14,6 @@ address Alokasi(infotype X) {
     return P;
 }
 
-void Create_tree(Tree *T) {
-    *T = NULL;
-}
-
 // Menghapus seluruh node dalam tree
 void DeAlokasi(Tree *T) {
     if (*T != NULL) {
@@ -28,73 +24,12 @@ void DeAlokasi(Tree *T) {
     }
 }
 
-void PreOrder(Tree T) {
-    if (T == NULL) return;
-    printf("%d ", T->info);
-    PreOrder(T->ps_fs);
-    PreOrder(T->ps_nb);
-}
-
-void InOrder(Tree T) {
-    if (T == NULL) return;
-    InOrder(T->ps_fs);
-    printf("%d ", T->info);
-    InOrder(T->ps_nb);
-}
-
-void PostOrder(Tree T) {
-    if (T == NULL) return;
-    PostOrder(T->ps_fs);
-    PostOrder(T->ps_nb);
-    printf("%d ", T->info);
-}
-
-void LevelOrder(Tree T) {
-    if (T == NULL) return;
-
-    int capacity = 16;
-    int count = 0;
-    int head = 0;
-    address *queue = (address *)malloc(capacity * sizeof(address));
-    if (queue == NULL) return;
-
-    queue[count++] = T;
-    while (head < count) {
-        address current = queue[head++];
-        printf("%d ", current->info);
-
-        address child = current->ps_fs;
-        while (child != NULL) {
-            if (count >= capacity) {
-                capacity *= 2;
-                address *newQueue = (address *)realloc(queue, capacity * sizeof(address));
-                if (newQueue == NULL) {
-                    free(queue);
-                    return;
-                }
-                queue = newQueue;
-            }
-            queue[count++] = child;
-            child = child->ps_nb;
-        }
-    }
-
-    free(queue);
-}
-
-int Search(Tree T, infotype X) {
-    if (T == NULL) return 0;
-    if (T->info == X) return 1;
-    if (Search(T->ps_fs, X)) return 1;
-    if (Search(T->ps_nb, X)) return 1;
-    return 0;
-}
-
 // Inisialisasi awal untuk struktur Trie dengan mengatur nilai default dan membuat root dummy
 void InisialisasiTrie(Tree *root) {
     *root = Alokasi(-1); // Nilai default untuk Trie
 }
 
+// Mencari anak dari suatu parent berdasarkan item tertentu, jika tidak ditemukan maka akan dibuatkan node anak baru
 address CariAtauBuatChild(address parent, infotype idBarang) {
     if (parent == NULL)
         return NULL;
@@ -122,6 +57,7 @@ address CariAtauBuatChild(address parent, infotype idBarang) {
     return newNode;
 }
 
+// Memasukkan sekumpulan item dari sebuah transaksi ke dalam Trie secara rekursif untuk menghitung support kombinasi subset
 void MasukkanTransaksiKeTrie(address node, infotype *daftarBarang, int jumlahBarang) {
     int i;
     if (node == NULL)
@@ -134,6 +70,7 @@ void MasukkanTransaksiKeTrie(address node, infotype *daftarBarang, int jumlahBar
     }
 }
 
+// Mendapatkan string nama barang berdasarkan angka representasinya
 void AmbilNamaBarang(infotype idBarang, char* namaBarang) {
     switch(idBarang) {
         case 1:
@@ -154,6 +91,7 @@ void AmbilNamaBarang(infotype idBarang, char* namaBarang) {
     }
 }
 
+// Menelusuri Trie untuk mencetak pasangan itemset yang frekuensi kemunculannya mencapai atau melebihi threshold
 void CetakItemsetSering(address node, infotype *jalur, int jumlahItem, int threshold) {
     int i;
     if (node == NULL)
@@ -186,6 +124,7 @@ void CetakItemsetSering(address node, infotype *jalur, int jumlahItem, int thres
     }
 }
 
+// Modul untuk mengurutkan array
 void UrutkanDaftar(infotype *daftar, int n) {
     int i, j;
     for (i = 0; i < n; i++) {
@@ -199,6 +138,7 @@ void UrutkanDaftar(infotype *daftar, int n) {
     }
 }
 
+// Sub-modul untuk mengolah string transaksi (dari file atau manual) dan memasukannya ke Tries
 void ProsesStringTransaksi(Tree root, char *teksInput, int *hitungTransaksi) {
     infotype daftarBarang[20];
     int jumlah = 0;

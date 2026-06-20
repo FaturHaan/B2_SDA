@@ -4,16 +4,16 @@
 #include "nbtree_dynamic.h"
 
 int main() {
-    Tree root;
-    int pilihan;
-    int totalTransaksi = 0;
-    int nomorTransaksi;
-    char inputBarang[256];
-    int jumlahTransaksi;
-    char namaFile[100];
-    int totalSebelum;
-    int threshold;
-    infotype jalur[20];
+    Tree root;              // Root dummy untuk struktur trie
+    int pilihan;            // Menyimpan pilihan metode input
+    int totalTransaksi = 0; // Menghitung jumlah transaksi yang sukses diproses
+    int nomorTransaksi;     // Perulangan input transaksi manual
+    char inputBarang[256];  // Buffer untuk menampung string input transaksi
+    int jumlahTransaksi;    // Menyimpan jumlah transaksi yang ingin dimasukkan user
+    char namaFile[100];     // Buffer untuk menampung nama file txt dari user
+    int totalSebelum;       // Penanda jumlah transaksi sebelum diproses untuk validasi
+    int threshold;          // Batas minimum support
+    infotype jalur[20];     // Array bantu untuk mencatat jalur item yang sedang ditelusuri saat traversal
     
     InisialisasiTrie(&root);
     
